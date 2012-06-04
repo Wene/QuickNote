@@ -1,0 +1,9 @@
+QuickNote
+---------
+
+A small and simple Notepad
+
+Features:
+- Autosave content, position, size and settings
+- Checkbox to enable transparency
+- Checkbox to set the Window always on top
