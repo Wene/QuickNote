@@ -41,12 +41,13 @@ MainWidget::MainWidget(QWidget *parent)
     EdtMain->setPlainText(Settings->value("text","").toString());
     Settings->endGroup();
 
-    //connect Slots
+    //connect signals and slots
     connect(ChkTransparent, SIGNAL(stateChanged(int)), this, SLOT(setOpacity(int)));
     connect(ChkOnTop, SIGNAL(stateChanged(int)), this, SLOT(setOnTop(int)));
 
 }
 
+//Destructor - save all settings
 MainWidget::~MainWidget()
 {
     Settings->beginGroup("window");
