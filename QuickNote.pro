@@ -14,3 +14,8 @@ SOURCES += main.cpp\
         mainwidget.cpp
 
 HEADERS  += mainwidget.h
+
+RC_FILE = QuickNote.rc
+
+OTHER_FILES += \
+    QuickNote.rc
