@@ -5,17 +5,37 @@ MainWidget::MainWidget(QWidget *parent)
 {
     //create Widgets
     LayMain = new QVBoxLayout(this);
+    Tabs = new QTabWidget();
+    FlatWidget = new QWidget();
+    ScrollArea = new QScrollArea();
+    GridLayout = new QGridLayout();
     LaySettings = new QHBoxLayout();
     EdtMain = new QTextEdit();
     ChkTransparent = new QCheckBox(tr("Transparent"));
     ChkOnTop = new QCheckBox(tr("Immer im Vordergrund"));
 
     //create Layout
-    LayMain->addWidget(EdtMain);
+    LayMain->addWidget(Tabs);
+    Tabs->addTab(EdtMain, tr("Edit"));
+    FlatWidget->setLayout(GridLayout);
+    ScrollArea->setWidget(FlatWidget);
+    Tabs->addTab(ScrollArea, tr("Buttons"));
     LayMain->addLayout(LaySettings);
     LaySettings->addWidget(ChkTransparent);
     LaySettings->addWidget(ChkOnTop);
     LaySettings->addStretch();
+
+    //Test
+    for(int i = 0; i < 10; i++)
+    {
+        for(int j = 0; j < 10; j++)
+        {
+            QPushButton *myButton = new QPushButton(tr("Knopf X%0, Y%1")
+                                                    .arg(i)
+                                                    .arg(j));
+            GridLayout->addWidget(myButton, i, j);
+        }
+    }
 
     //Load Settings
     Settings = new QSettings("QuickNote","QuickNote", this);
