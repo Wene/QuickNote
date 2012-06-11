@@ -10,10 +10,7 @@ class MainWidget : public QWidget
 private:
     //Widgets
     QVBoxLayout *LayMain;
-    QTabWidget *Tabs;
-    QWidget *FlatWidget;
-    QScrollArea *ScrollArea;
-    QGridLayout *GridLayout;
+    QTabWidget *TabMain;
     QHBoxLayout *LaySettings;
     QTextEdit *EdtMain;
     QCheckBox *ChkTransparent, *ChkOnTop;
