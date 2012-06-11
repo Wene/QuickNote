@@ -19,6 +19,18 @@ MainWidget::MainWidget(QWidget *parent)
     LaySettings->addWidget(ChkOnTop);
     LaySettings->addStretch();
 
+    //create Snippets Tab
+    WidTabSnippets = new QWidget();
+    TabMain->addTab(WidTabSnippets, tr("Schnippsel"));
+
+    //Dummy Settings
+    StrSnippets = new QStringList();
+    for(int i = 0; i < 20; i++)
+    {
+        StrSnippets->append(tr("Zeile %0").arg(i+1));
+    }
+
+    this->showButtons();
 
     //Load Settings
     Settings = new QSettings("QuickNote","QuickNote", this);
@@ -73,6 +85,7 @@ MainWidget::~MainWidget()
     
 }
 
+//private slots
 void MainWidget::setOpacity(int checked)
 {
     if(checked)
@@ -101,4 +114,42 @@ void MainWidget::setOnTop(int checked)
         this->show();
     }
 
+}
+
+void MainWidget::editList()
+{
+    if(WidTabSnippets->layout())
+    {
+        delete WidTabSnippets->layout();
+    }
+    LaySnippets = new QVBoxLayout();
+    WidTabSnippets->setLayout(LaySnippets);
+    BtnToggleEdit = new QPushButton(tr("Bearbeitung abgeschlossen"));
+    LaySnippets->addWidget(BtnToggleEdit);
+    connect(BtnToggleEdit, SIGNAL(clicked()), this, SLOT(showButtons()));
+    EdtSnippets = new QTextEdit;
+    LaySnippets->addWidget(EdtSnippets);
+    QString str;
+    foreach(str, *StrSnippets)
+    {
+        EdtSnippets->append(str);
+    }
+}
+
+void MainWidget::showButtons()
+{
+    if(WidTabSnippets->layout())
+    {
+        delete WidTabSnippets->layout();
+    }
+    LaySnippets = new QVBoxLayout();
+    WidTabSnippets->setLayout(LaySnippets);
+    BtnToggleEdit = new QPushButton(tr("Liste Bearbeiten"));
+    LaySnippets->addWidget(BtnToggleEdit);
+    connect(BtnToggleEdit, SIGNAL(clicked()), this, SLOT(editList()));
+    QString str;
+    foreach(str, *StrSnippets)
+    {
+        LaySnippets->addWidget(new QPushButton(str));
+    }
 }
