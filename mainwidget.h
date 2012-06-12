@@ -13,6 +13,7 @@ private:
     QHBoxLayout *LaySettings;
     QTextEdit *EdtMain;
     QCheckBox *ChkTransparent, *ChkOnTop;
+    QPushButton *BtnCopy;
 
     //Objects
     QSettings *Settings;
@@ -20,6 +21,7 @@ private:
 private slots:
     void setOpacity(int);
     void setOnTop(int);
+    void copyClip();
 
 public:
     MainWidget(QWidget *parent = 0);

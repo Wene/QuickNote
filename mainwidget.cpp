@@ -9,12 +9,14 @@ MainWidget::MainWidget(QWidget *parent)
     EdtMain = new QTextEdit();
     ChkTransparent = new QCheckBox(tr("Transparent"));
     ChkOnTop = new QCheckBox(tr("Immer im Vordergrund"));
+    BtnCopy = new QPushButton(tr("Kopiere Plain Text"));
 
     //create Layout
     LayMain->addWidget(EdtMain);
     LayMain->addLayout(LaySettings);
     LaySettings->addWidget(ChkTransparent);
     LaySettings->addWidget(ChkOnTop);
+    LaySettings->addWidget(BtnCopy);
     LaySettings->addStretch();
 
     //Load Settings
@@ -44,6 +46,7 @@ MainWidget::MainWidget(QWidget *parent)
     //connect signals and slots
     connect(ChkTransparent, SIGNAL(stateChanged(int)), this, SLOT(setOpacity(int)));
     connect(ChkOnTop, SIGNAL(stateChanged(int)), this, SLOT(setOnTop(int)));
+    connect(BtnCopy, SIGNAL(clicked()), this, SLOT(copyClip()));
 
 }
 
@@ -98,4 +101,10 @@ void MainWidget::setOnTop(int checked)
         this->show();
     }
 
+}
+
+void MainWidget::copyClip()
+{
+    QClipboard *Clip = QApplication::clipboard();
+    Clip->setText(EdtMain->textCursor().selectedText());
 }
