@@ -13,10 +13,10 @@ MainWidget::MainWidget(QWidget *parent)
 
     //create Layout
     LayMain->addWidget(EdtMain);
+    LayMain->addWidget(BtnCopy);
     LayMain->addLayout(LaySettings);
     LaySettings->addWidget(ChkTransparent);
     LaySettings->addWidget(ChkOnTop);
-    LaySettings->addWidget(BtnCopy);
     LaySettings->addStretch();
 
     //Load Settings
