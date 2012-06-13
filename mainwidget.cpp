@@ -6,7 +6,7 @@ MainWidget::MainWidget(QWidget *parent)
     //create Widgets
     LayMain = new QVBoxLayout(this);
     LaySettings = new QHBoxLayout();
-    EdtMain = new QTextEdit();
+    EdtMain = new QPlainTextEdit();
     ChkTransparent = new QCheckBox(tr("Transparent"));
     ChkOnTop = new QCheckBox(tr("Immer im Vordergrund"));
     BtnCopy = new QPushButton(tr("Kopiere Plain Text"));

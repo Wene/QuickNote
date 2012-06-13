@@ -11,7 +11,7 @@ private:
     //Widgets
     QVBoxLayout *LayMain;
     QHBoxLayout *LaySettings;
-    QTextEdit *EdtMain;
+    QPlainTextEdit *EdtMain;
     QCheckBox *ChkTransparent, *ChkOnTop;
     QPushButton *BtnCopy;
 
