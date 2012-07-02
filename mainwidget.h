@@ -21,9 +21,6 @@ private:
     //Snippets
     QWidget *WidTabSnippets;
     QVBoxLayout *LaySnippets;
-    QTextEdit *EdtSnippets;
-    QPushButton *BtnToggleEdit, *BtnSnippet;
-    QStringList *StrSnippets;
 
     //Settings
     QSettings *Settings;
@@ -31,8 +28,6 @@ private:
 private slots:
     void setOpacity(int);
     void setOnTop(int);
-    void editList();
-    void showButtons();
 
 public:
     MainWidget(QWidget *parent = 0);
