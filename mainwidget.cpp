@@ -15,6 +15,7 @@ MainWidget::MainWidget(QWidget *parent)
     WidEdit = new QWidget();
     LaySnippets = new QVBoxLayout();
     LayEdit = new QVBoxLayout();
+    Snippet = new snippet();
 
     //create Layout
     LayMain->addWidget(TabMain);
@@ -28,6 +29,7 @@ MainWidget::MainWidget(QWidget *parent)
     LaySettings->addStretch();
     TabMain->addTab(WidTabSnippets, tr("Schnipsel"));
     WidTabSnippets->setLayout(LaySnippets);
+    LaySnippets->addWidget(Snippet);
 
     //Load Settings
     Settings = new QSettings("QuickNote","QuickNote", this);

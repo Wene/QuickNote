@@ -2,6 +2,7 @@
 #define MAINWIDGET_H
 
 #include <QtGui>
+#include "snippet.h"
 
 class MainWidget : public QWidget
 {
@@ -23,14 +24,16 @@ private:
     //Snippets
     QWidget *WidTabSnippets;
     QVBoxLayout *LaySnippets;
+    snippet *Snippet;
+
 
     //Settings
     QSettings *Settings;
 
 private slots:
+    void copyClip();
     void setOpacity(int);
     void setOnTop(int);
-    void copyClip();
 
 public:
     MainWidget(QWidget *parent = 0);

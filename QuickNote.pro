@@ -11,9 +11,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwidget.cpp
+        mainwidget.cpp \
+    snippet.cpp
 
-HEADERS  += mainwidget.h
+HEADERS  += mainwidget.h \
+    snippet.h
 
 RC_FILE = QuickNote.rc
 
