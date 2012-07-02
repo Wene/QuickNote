@@ -2,7 +2,6 @@
 #define MAINWIDGET_H
 
 #include <QtGui>
-#include <QtGlobal>
 
 class MainWidget : public QWidget
 {
@@ -16,7 +15,10 @@ private:
     QCheckBox *ChkTransparent, *ChkOnTop;
 
     //Editor
-    QTextEdit *EdtMain;
+    QWidget *WidEdit;
+    QVBoxLayout *LayEdit;
+    QPlainTextEdit *EdtMain;
+    QPushButton *BtnCopy;
 
     //Snippets
     QWidget *WidTabSnippets;
@@ -28,6 +30,7 @@ private:
 private slots:
     void setOpacity(int);
     void setOnTop(int);
+    void copyClip();
 
 public:
     MainWidget(QWidget *parent = 0);

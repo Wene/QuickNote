@@ -7,22 +7,26 @@ MainWidget::MainWidget(QWidget *parent)
     LayMain = new QVBoxLayout(this);
     TabMain = new QTabWidget();
     LaySettings = new QHBoxLayout();
-    EdtMain = new QTextEdit();
+    EdtMain = new QPlainTextEdit();
+    BtnCopy = new QPushButton(tr("Kopiere Plain Text"));
     ChkTransparent = new QCheckBox(tr("Transparent"));
     ChkOnTop = new QCheckBox(tr("Immer im Vordergrund"));
+    WidTabSnippets = new QWidget();
+    WidEdit = new QWidget();
+    LaySnippets = new QVBoxLayout();
+    LayEdit = new QVBoxLayout();
 
     //create Layout
     LayMain->addWidget(TabMain);
-    TabMain->addTab(EdtMain, tr("Editor"));
+    TabMain->addTab(WidEdit, tr("Editor"));
+    WidEdit->setLayout(LayEdit);
+    LayEdit->addWidget(EdtMain);
+    LayEdit->addWidget(BtnCopy);
     LayMain->addLayout(LaySettings);
     LaySettings->addWidget(ChkTransparent);
     LaySettings->addWidget(ChkOnTop);
     LaySettings->addStretch();
-
-    //create Snippets Tab
-    WidTabSnippets = new QWidget();
     TabMain->addTab(WidTabSnippets, tr("Schnipsel"));
-    LaySnippets = new QVBoxLayout();
     WidTabSnippets->setLayout(LaySnippets);
 
     //Load Settings
@@ -52,7 +56,7 @@ MainWidget::MainWidget(QWidget *parent)
     //connect signals and slots
     connect(ChkTransparent, SIGNAL(stateChanged(int)), this, SLOT(setOpacity(int)));
     connect(ChkOnTop, SIGNAL(stateChanged(int)), this, SLOT(setOnTop(int)));
-
+    connect(BtnCopy, SIGNAL(clicked()), this, SLOT(copyClip()));
 }
 
 //Destructor - save all settings
@@ -109,3 +113,8 @@ void MainWidget::setOnTop(int checked)
 
 }
 
+void MainWidget::copyClip()
+{
+    QClipboard *Clip = QApplication::clipboard();
+    Clip->setText(EdtMain->textCursor().selectedText());
+}
