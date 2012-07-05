@@ -12,10 +12,16 @@ public:
 private:
     QHBoxLayout *LayMain;
     QPushButton *BtnCopy, *BtnEdit, *BtnDelete;
+    QLineEdit *edit;
+
+
+    QString sContent;
 
 signals:
 
 public slots:
+    void copyContent();
+    void toggleEdit(bool editMode);
 
 };
 

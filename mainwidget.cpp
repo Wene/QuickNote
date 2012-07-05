@@ -7,8 +7,12 @@ MainWidget::MainWidget(QWidget *parent)
     LayMain = new QVBoxLayout(this);
     TabMain = new QTabWidget();
     LaySettings = new QHBoxLayout();
+    LayEditButtons = new QHBoxLayout();
     EdtMain = new QPlainTextEdit();
-    BtnCopy = new QPushButton(tr("Kopiere Plain Text"));
+    BtnCopy = new QPushButton(tr("Kopieren"));
+    BtnCopy->setToolTip(tr("Kopiere den markierten Text ohne Formatierung"));
+    BtnPaste = new QPushButton(tr("Anhängen"));
+    BtnPaste->setToolTip(tr("Hänge Inhalt der Zwischenablage unten an"));
     ChkTransparent = new QCheckBox(tr("Transparent"));
     ChkOnTop = new QCheckBox(tr("Immer im Vordergrund"));
     WidTabSnippets = new QWidget();
@@ -22,7 +26,9 @@ MainWidget::MainWidget(QWidget *parent)
     TabMain->addTab(WidEdit, tr("Editor"));
     WidEdit->setLayout(LayEdit);
     LayEdit->addWidget(EdtMain);
-    LayEdit->addWidget(BtnCopy);
+    LayEdit->addLayout(LayEditButtons);
+    LayEditButtons->addWidget(BtnCopy);
+    LayEditButtons->addWidget(BtnPaste);
     LayMain->addLayout(LaySettings);
     LaySettings->addWidget(ChkTransparent);
     LaySettings->addWidget(ChkOnTop);
@@ -59,6 +65,7 @@ MainWidget::MainWidget(QWidget *parent)
     connect(ChkTransparent, SIGNAL(stateChanged(int)), this, SLOT(setOpacity(int)));
     connect(ChkOnTop, SIGNAL(stateChanged(int)), this, SLOT(setOnTop(int)));
     connect(BtnCopy, SIGNAL(clicked()), this, SLOT(copyClip()));
+    connect(BtnPaste, SIGNAL(clicked()), this, SLOT(pasteClip()));
 }
 
 //Destructor - save all settings
@@ -119,4 +126,10 @@ void MainWidget::copyClip()
 {
     QClipboard *Clip = QApplication::clipboard();
     Clip->setText(EdtMain->textCursor().selectedText());
+}
+
+void MainWidget::pasteClip()
+{
+    QClipboard *Clip = QApplication::clipboard();
+    EdtMain->appendPlainText(Clip->text());
 }

@@ -18,8 +18,9 @@ private:
     //Editor
     QWidget *WidEdit;
     QVBoxLayout *LayEdit;
+    QHBoxLayout *LayEditButtons;
     QPlainTextEdit *EdtMain;
-    QPushButton *BtnCopy;
+    QPushButton *BtnCopy, *BtnPaste;
 
     //Snippets
     QWidget *WidTabSnippets;
@@ -32,6 +33,7 @@ private:
 
 private slots:
     void copyClip();
+    void pasteClip();
     void setOpacity(int);
     void setOnTop(int);
 
