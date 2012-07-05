@@ -48,3 +48,8 @@ void snippet::toggleEdit(bool editMode)
         BtnCopy->show();
     }
 }
+
+QString snippet::getContent()
+{
+    return sContent;
+}

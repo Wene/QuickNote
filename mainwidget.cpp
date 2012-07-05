@@ -20,6 +20,7 @@ MainWidget::MainWidget(QWidget *parent)
     LaySnippets = new QVBoxLayout();
     LayEdit = new QVBoxLayout();
     Snippet = new snippet();
+    BtnAddSnippet = new QPushButton(tr("Schnippsel hinzufügen"));
 
     //create Layout
     LayMain->addWidget(TabMain);
@@ -35,6 +36,7 @@ MainWidget::MainWidget(QWidget *parent)
     LaySettings->addStretch();
     TabMain->addTab(WidTabSnippets, tr("Schnipsel"));
     WidTabSnippets->setLayout(LaySnippets);
+    LaySnippets->addWidget(BtnAddSnippet);
     LaySnippets->addWidget(Snippet);
 
     //Load Settings
@@ -66,6 +68,7 @@ MainWidget::MainWidget(QWidget *parent)
     connect(ChkOnTop, SIGNAL(stateChanged(int)), this, SLOT(setOnTop(int)));
     connect(BtnCopy, SIGNAL(clicked()), this, SLOT(copyClip()));
     connect(BtnPaste, SIGNAL(clicked()), this, SLOT(pasteClip()));
+    connect(BtnAddSnippet, SIGNAL(clicked()), this, SLOT(addSnippet()));
 }
 
 //Destructor - save all settings
@@ -132,4 +135,10 @@ void MainWidget::pasteClip()
 {
     QClipboard *Clip = QApplication::clipboard();
     EdtMain->appendPlainText(Clip->text());
+}
+
+void MainWidget::addSnippet()
+{
+    snippet *newSnippet = new snippet();
+    LaySnippets->addWidget(newSnippet);
 }

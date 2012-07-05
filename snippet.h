@@ -8,6 +8,7 @@ class snippet : public QWidget
     Q_OBJECT
 public:
     explicit snippet(QWidget *parent = 0);
+    QString getContent();
 
 private:
     QHBoxLayout *LayMain;

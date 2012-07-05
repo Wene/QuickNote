@@ -26,6 +26,7 @@ private:
     QWidget *WidTabSnippets;
     QVBoxLayout *LaySnippets;
     snippet *Snippet;
+    QPushButton *BtnAddSnippet;
 
 
     //Settings
@@ -36,6 +37,7 @@ private slots:
     void pasteClip();
     void setOpacity(int);
     void setOnTop(int);
+    void addSnippet();
 
 public:
     MainWidget(QWidget *parent = 0);
