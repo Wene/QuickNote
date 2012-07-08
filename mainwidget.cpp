@@ -16,6 +16,7 @@ MainWidget::MainWidget(QWidget *parent)
     LaySnippets = new QVBoxLayout();
     LayEdit = new QVBoxLayout();
     BtnEditSnippets = new QPushButton(tr("Bearbeiten"));
+    BtnEditSnippets->setCheckable(true);
 
     //create Layout
     LayMain->addWidget(TabMain);
@@ -30,7 +31,10 @@ MainWidget::MainWidget(QWidget *parent)
     TabMain->addTab(WidSnippets, tr("Schnipsel"));
     WidSnippets->setLayout(LaySnippets);
     LaySnippets->addWidget(BtnEditSnippets);
-    LaySnippets->addSpacing(3);
+
+    QFrame *horizontalLine = new QFrame();
+    horizontalLine->setFrameStyle(QFrame::HLine);
+    LaySnippets->addWidget(horizontalLine);
 
     //Load Settings
     Settings = new QSettings("QuickNote","QuickNote", this);
@@ -67,6 +71,7 @@ MainWidget::MainWidget(QWidget *parent)
     connect(ChkTransparent, SIGNAL(stateChanged(int)), this, SLOT(setOpacity(int)));
     connect(ChkOnTop, SIGNAL(stateChanged(int)), this, SLOT(setOnTop(int)));
     connect(BtnCopy, SIGNAL(clicked()), this, SLOT(copyClip()));
+    connect(BtnEditSnippets, SIGNAL(toggled(bool)), this, SLOT(editSnippets(bool)));
 }
 
 //Destructor - save all settings
@@ -88,6 +93,7 @@ MainWidget::~MainWidget()
 
     Settings->beginGroup("content");
     Settings->setValue("text",EdtMain->toPlainText());
+    Settings->setValue("snippets", SnippetsList);
     Settings->endGroup();
     
 }
@@ -127,4 +133,51 @@ void MainWidget::copyClip()
 {
     QClipboard *Clip = QApplication::clipboard();
     Clip->setText(EdtMain->textCursor().selectedText());
+}
+
+void MainWidget::editSnippets(bool bEdit)
+{
+    if(bEdit)
+    {
+        int count = LaySnippets->count();
+        for(int i = count-1; i > 1; i--) //Continue while more than EditButton and Line are in the Layout
+        {
+            QLayoutItem *Item = LaySnippets->itemAt(i);
+            if(!Item->isEmpty())
+            {
+                Item->widget()->deleteLater();
+            }
+            LaySnippets->removeItem(Item);
+        }
+        for(int i = 0; i < SnippetsList.count(); i++)
+        {
+            EdtSnippet = new QLineEdit(SnippetsList.at(i));
+            LaySnippets->addWidget(EdtSnippet);
+        }
+        LaySnippets->addWidget(new QLineEdit());
+        LaySnippets->addStretch();
+    }
+    else
+    {
+        SnippetsList.clear();
+        int count = LaySnippets->count();
+        for(int i = 2; i < count-1; i++)
+        {
+            QLayoutItem *Item = LaySnippets->itemAt(2);
+            EdtSnippet = (QLineEdit*)Item->widget();
+            if(!EdtSnippet->text().isEmpty())
+            {
+                SnippetsList.append(EdtSnippet->text());
+            }
+            EdtSnippet->deleteLater();
+            LaySnippets->removeItem(Item);
+        }
+        LaySnippets->removeItem(LaySnippets->itemAt(2));
+        for(int i = 0; i < SnippetsList.count(); i++)
+        {
+            BtnCopySnippet = new QPushButton(SnippetsList.at(i));
+            LaySnippets->addWidget(BtnCopySnippet);
+        }
+        LaySnippets->addStretch();
+    }
 }

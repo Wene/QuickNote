@@ -25,7 +25,7 @@ private:
     QVBoxLayout *LaySnippets;
     QStringList SnippetsList;
     QPushButton *BtnEditSnippets;
-    QLineEdit *EdtSnippets;
+    QLineEdit *EdtSnippet;
     QPushButton *BtnCopySnippet;
 
     //Settings
@@ -35,6 +35,7 @@ private slots:
     void setOpacity(int);
     void setOnTop(int);
     void copyClip();
+    void editSnippets(bool);
 
 public:
     MainWidget(QWidget *parent = 0);
