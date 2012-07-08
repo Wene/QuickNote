@@ -59,11 +59,7 @@ MainWidget::MainWidget(QWidget *parent)
     Settings->beginGroup("content");
     EdtMain->setPlainText(Settings->value("text","").toString());
     SnippetsList.append(Settings->value("snippets").toStringList());
-    for(int i = 0; i < SnippetsList.count(); i++)
-    {
-        BtnCopySnippet = new QPushButton(SnippetsList.at(i));
-        LaySnippets->addWidget(BtnCopySnippet);
-    }
+    createSnippetButtons();
     LaySnippets->addStretch();
     Settings->endGroup();
 
@@ -173,11 +169,18 @@ void MainWidget::editSnippets(bool bEdit)
             LaySnippets->removeItem(Item);
         }
         LaySnippets->removeItem(LaySnippets->itemAt(2));
-        for(int i = 0; i < SnippetsList.count(); i++)
-        {
-            BtnCopySnippet = new QPushButton(SnippetsList.at(i));
-            LaySnippets->addWidget(BtnCopySnippet);
-        }
+        createSnippetButtons();
         LaySnippets->addStretch();
+    }
+}
+
+void MainWidget::createSnippetButtons()
+{
+    for(int i = 0; i < SnippetsList.count(); i++)
+    {
+        BtnCopySnippet = new QPushButton(SnippetsList.at(i));
+        LaySnippets->addWidget(BtnCopySnippet);
+        SnippetHandler *Handler = new SnippetHandler(SnippetsList.at(i));
+        connect(BtnCopySnippet, SIGNAL(clicked()), Handler, SLOT(copyToClipboard()));
     }
 }
