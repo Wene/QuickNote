@@ -7,8 +7,12 @@ MainWidget::MainWidget(QWidget *parent)
     LayMain = new QVBoxLayout(this);
     TabMain = new QTabWidget();
     LaySettings = new QHBoxLayout();
+    LayClipButtons = new QHBoxLayout();
     EdtMain = new QPlainTextEdit();
-    BtnCopy = new QPushButton(tr("Kopiere Plain Text"));
+    BtnCopy = new QPushButton(tr("Kopieren"));
+    BtnCopy->setToolTip(tr("Kopiert den markierten Bereich als Plain Text in die Zwischenablage"));
+    BtnAppend = new QPushButton(tr("Anhängen"));
+    BtnAppend->setToolTip(tr("Hängt den Text aus der Zwischenablage zu unterst an."));
     ChkTransparent = new QCheckBox(tr("Transparent"));
     ChkOnTop = new QCheckBox(tr("Immer im Vordergrund"));
     WidSnippets = new QWidget();
@@ -23,7 +27,9 @@ MainWidget::MainWidget(QWidget *parent)
     TabMain->addTab(WidEdit, tr("Editor"));
     WidEdit->setLayout(LayEdit);
     LayEdit->addWidget(EdtMain);
-    LayEdit->addWidget(BtnCopy);
+    LayEdit->addLayout(LayClipButtons);
+    LayClipButtons->addWidget(BtnCopy);
+    LayClipButtons->addWidget(BtnAppend);
     LayMain->addLayout(LaySettings);
     LaySettings->addWidget(ChkTransparent);
     LaySettings->addWidget(ChkOnTop);
@@ -68,6 +74,7 @@ MainWidget::MainWidget(QWidget *parent)
     connect(ChkOnTop, SIGNAL(stateChanged(int)), this, SLOT(setOnTop(int)));
     connect(BtnCopy, SIGNAL(clicked()), this, SLOT(copyClip()));
     connect(BtnEditSnippets, SIGNAL(toggled(bool)), this, SLOT(editSnippets(bool)));
+    connect(BtnAppend, SIGNAL(clicked()), this, SLOT(appendClip()));
 }
 
 //Destructor - save all settings
@@ -183,4 +190,10 @@ void MainWidget::createSnippetButtons()
         SnippetHandler *Handler = new SnippetHandler(SnippetsList.at(i));
         connect(BtnCopySnippet, SIGNAL(clicked()), Handler, SLOT(copyToClipboard()));
     }
+}
+
+void MainWidget::appendClip()
+{
+    QClipboard *Clipboard = QApplication::clipboard();
+    EdtMain->appendPlainText(Clipboard->text());
 }

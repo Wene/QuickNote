@@ -12,14 +12,14 @@ private:
     //Layout
     QVBoxLayout *LayMain;
     QTabWidget *TabMain;
-    QHBoxLayout *LaySettings;
+    QHBoxLayout *LaySettings, *LayClipButtons;
     QCheckBox *ChkTransparent, *ChkOnTop;
 
     //Editor
     QWidget *WidEdit;
     QVBoxLayout *LayEdit;
     QPlainTextEdit *EdtMain;
-    QPushButton *BtnCopy;
+    QPushButton *BtnCopy, *BtnAppend;
 
     //Snippets
     QWidget *WidSnippets;
@@ -39,6 +39,7 @@ private slots:
     void setOpacity(int);
     void setOnTop(int);
     void copyClip();
+    void appendClip();
     void editSnippets(bool);
 
 
