@@ -1,15 +1,17 @@
 #include "snippet.h"
 
-snippet::snippet(QWidget *parent) :
+snippet::snippet(int index, QWidget *parent) :
     QWidget(parent)
 {
+    iListIndex = index;
     sContent = tr("<leer>");
     initialize();
 }
 
-snippet::snippet(QString content, QWidget *parent) :
+snippet::snippet(int index, QString content, QWidget *parent) :
     QWidget(parent)
 {
+    iListIndex = index;
     sContent = content;
     initialize();
 }
@@ -53,8 +55,7 @@ void snippet::toggleEdit(bool editMode)
     }
     else
     {
-        sContent = edit->text();
-        BtnCopy->setText(sContent);
+        setContent(edit->text());
         edit->hide();
         BtnCopy->show();
     }
@@ -64,6 +65,7 @@ void snippet::setContent(QString content)
 {
     sContent = content;
     BtnCopy->setText(sContent);
+    emit contentChanged(iListIndex, sContent);
 }
 
 QString snippet::getContent()

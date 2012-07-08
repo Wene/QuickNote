@@ -62,7 +62,7 @@ MainWidget::MainWidget(QWidget *parent)
     strSnippets.append(Settings->value("snippets").toStringList());
     for(int i = 0; i < strSnippets.count(); i++)
     {
-        Snippet = new snippet(strSnippets.at(i));
+        Snippet = new snippet(i, strSnippets.at(i));
         LaySnippets->addWidget(Snippet);
     }
     Settings->endGroup();
@@ -112,7 +112,6 @@ void MainWidget::setOpacity(int checked)
     {
         this->setWindowOpacity(1.0);
     }
-
 }
 
 void MainWidget::setOnTop(int checked)
@@ -129,7 +128,6 @@ void MainWidget::setOnTop(int checked)
         this->setWindowFlags(flags ^ (Qt::WindowStaysOnTopHint));
         this->show();
     }
-
 }
 
 void MainWidget::copyClip()
@@ -146,6 +144,8 @@ void MainWidget::pasteClip()
 
 void MainWidget::addSnippet()
 {
-    snippet *newSnippet = new snippet();
+    QString initialtext = "<neu>";
+    strSnippets.append(initialtext);
+    snippet *newSnippet = new snippet(strSnippets.count()-1, initialtext);
     LaySnippets->addWidget(newSnippet);
 }

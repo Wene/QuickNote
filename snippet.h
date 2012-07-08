@@ -7,8 +7,8 @@ class snippet : public QWidget
 {
     Q_OBJECT
 public:
-    explicit snippet(QWidget *parent = 0);
-    explicit snippet(QString content, QWidget *parent = 0);
+    explicit snippet(int index, QWidget *parent = 0);
+    explicit snippet(int index, QString content, QWidget *parent = 0);
     QString getContent();
 
 private:
@@ -17,10 +17,12 @@ private:
     QLineEdit *edit;
 
     QString sContent;
+    int iListIndex;
 
     void initialize();
 
 signals:
+    void contentChanged(int, QString);
 
 public slots:
     void copyContent();
