@@ -11,10 +11,11 @@ MainWidget::MainWidget(QWidget *parent)
     BtnCopy = new QPushButton(tr("Kopiere Plain Text"));
     ChkTransparent = new QCheckBox(tr("Transparent"));
     ChkOnTop = new QCheckBox(tr("Immer im Vordergrund"));
-    WidTabSnippets = new QWidget();
+    WidSnippets = new QWidget();
     WidEdit = new QWidget();
     LaySnippets = new QVBoxLayout();
     LayEdit = new QVBoxLayout();
+    BtnEditSnippets = new QPushButton(tr("Bearbeiten"));
 
     //create Layout
     LayMain->addWidget(TabMain);
@@ -26,8 +27,10 @@ MainWidget::MainWidget(QWidget *parent)
     LaySettings->addWidget(ChkTransparent);
     LaySettings->addWidget(ChkOnTop);
     LaySettings->addStretch();
-    TabMain->addTab(WidTabSnippets, tr("Schnipsel"));
-    WidTabSnippets->setLayout(LaySnippets);
+    TabMain->addTab(WidSnippets, tr("Schnipsel"));
+    WidSnippets->setLayout(LaySnippets);
+    LaySnippets->addWidget(BtnEditSnippets);
+    LaySnippets->addSpacing(3);
 
     //Load Settings
     Settings = new QSettings("QuickNote","QuickNote", this);
@@ -51,6 +54,13 @@ MainWidget::MainWidget(QWidget *parent)
     Settings->endGroup();
     Settings->beginGroup("content");
     EdtMain->setPlainText(Settings->value("text","").toString());
+    SnippetsList.append(Settings->value("snippets").toStringList());
+    for(int i = 0; i < SnippetsList.count(); i++)
+    {
+        BtnCopySnippet = new QPushButton(SnippetsList.at(i));
+        LaySnippets->addWidget(BtnCopySnippet);
+    }
+    LaySnippets->addStretch();
     Settings->endGroup();
 
     //connect signals and slots

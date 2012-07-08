@@ -21,8 +21,12 @@ private:
     QPushButton *BtnCopy;
 
     //Snippets
-    QWidget *WidTabSnippets;
+    QWidget *WidSnippets;
     QVBoxLayout *LaySnippets;
+    QStringList SnippetsList;
+    QPushButton *BtnEditSnippets;
+    QLineEdit *EdtSnippets;
+    QPushButton *BtnCopySnippet;
 
     //Settings
     QSettings *Settings;
