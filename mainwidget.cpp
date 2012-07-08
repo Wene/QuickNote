@@ -19,7 +19,6 @@ MainWidget::MainWidget(QWidget *parent)
     WidEdit = new QWidget();
     LaySnippets = new QVBoxLayout();
     LayEdit = new QVBoxLayout();
-    Snippet = new snippet();
     BtnAddSnippet = new QPushButton(tr("Schnippsel hinzufügen"));
 
     //create Layout
@@ -37,7 +36,6 @@ MainWidget::MainWidget(QWidget *parent)
     TabMain->addTab(WidTabSnippets, tr("Schnipsel"));
     WidTabSnippets->setLayout(LaySnippets);
     LaySnippets->addWidget(BtnAddSnippet);
-    LaySnippets->addWidget(Snippet);
 
     //Load Settings
     Settings = new QSettings("QuickNote","QuickNote", this);
@@ -61,6 +59,12 @@ MainWidget::MainWidget(QWidget *parent)
     Settings->endGroup();
     Settings->beginGroup("content");
     EdtMain->setPlainText(Settings->value("text","").toString());
+    strSnippets.append(Settings->value("snippets").toStringList());
+    for(int i = 0; i < strSnippets.count(); i++)
+    {
+        Snippet = new snippet(strSnippets.at(i));
+        LaySnippets->addWidget(Snippet);
+    }
     Settings->endGroup();
 
     //connect signals and slots
@@ -90,6 +94,9 @@ MainWidget::~MainWidget()
 
     Settings->beginGroup("content");
     Settings->setValue("text",EdtMain->toPlainText());
+
+    Settings->setValue("snippets", strSnippets);
+
     Settings->endGroup();
     
 }

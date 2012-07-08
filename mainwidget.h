@@ -27,7 +27,7 @@ private:
     QVBoxLayout *LaySnippets;
     snippet *Snippet;
     QPushButton *BtnAddSnippet;
-
+    QStringList strSnippets;
 
     //Settings
     QSettings *Settings;

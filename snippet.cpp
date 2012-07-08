@@ -4,7 +4,19 @@ snippet::snippet(QWidget *parent) :
     QWidget(parent)
 {
     sContent = tr("<leer>");
+    initialize();
+}
 
+snippet::snippet(QString content, QWidget *parent) :
+    QWidget(parent)
+{
+    sContent = content;
+    initialize();
+}
+
+void snippet::initialize()
+{
+    this->setContentsMargins(-1,-1,-1,-1);
     LayMain = new QHBoxLayout(this);
     BtnCopy = new QPushButton(sContent);
     BtnEdit = new QPushButton(tr("E"));
@@ -24,7 +36,6 @@ snippet::snippet(QWidget *parent) :
     connect(BtnEdit, SIGNAL(toggled(bool)), this, SLOT(toggleEdit(bool)));
     connect(BtnCopy, SIGNAL(clicked()), this, SLOT(copyContent()));
 }
-
 
 void snippet::copyContent()
 {
@@ -47,6 +58,12 @@ void snippet::toggleEdit(bool editMode)
         edit->hide();
         BtnCopy->show();
     }
+}
+
+void snippet::setContent(QString content)
+{
+    sContent = content;
+    BtnCopy->setText(sContent);
 }
 
 QString snippet::getContent()
