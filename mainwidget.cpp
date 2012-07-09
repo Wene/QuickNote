@@ -15,6 +15,7 @@ MainWidget::MainWidget(QWidget *parent)
     BtnAppend->setToolTip(tr("<p>Hängt den Text aus der Zwischenablage zu unterst an</p>"));
     ChkTransparent = new QCheckBox(tr("Transparent"));
     ChkOnTop = new QCheckBox(tr("Immer im Vordergrund"));
+    ScrollSnippets = new QScrollArea();
     WidSnippets = new QWidget();
     WidEdit = new QWidget();
     LaySnippets = new QVBoxLayout();
@@ -39,8 +40,10 @@ MainWidget::MainWidget(QWidget *parent)
     LaySettings->addWidget(ChkTransparent);
     LaySettings->addWidget(ChkOnTop);
     LaySettings->addStretch();
-    TabMain->addTab(WidSnippets, tr("Schnipsel"));
     WidSnippets->setLayout(LaySnippets);
+    TabMain->addTab(ScrollSnippets, tr("Schnipsel"));
+    ScrollSnippets->setWidgetResizable(true);
+    ScrollSnippets->setWidget(WidSnippets);
     LaySnippets->addWidget(BtnEditSnippets);
 
     QFrame *horizontalLine = new QFrame();

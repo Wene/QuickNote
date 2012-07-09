@@ -22,6 +22,7 @@ private:
     QPushButton *BtnCopy, *BtnAppend;
 
     //Snippets
+    QScrollArea *ScrollSnippets;
     QWidget *WidSnippets;
     QVBoxLayout *LaySnippets;
     QStringList SnippetsList;
