@@ -42,6 +42,7 @@ private slots:
     void copyClip();
     void appendClip();
     void editSnippets(bool);
+    void createNewEdit(QString);
 
 
 public:

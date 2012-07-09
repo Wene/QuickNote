@@ -175,7 +175,9 @@ void MainWidget::editSnippets(bool bEdit)
             EdtSnippet = new QLineEdit(SnippetsList.at(i));
             LaySnippets->addWidget(EdtSnippet);
         }
-        LaySnippets->addWidget(new QLineEdit());
+        EdtSnippet = new QLineEdit();
+        LaySnippets->addWidget(EdtSnippet);
+        connect(EdtSnippet, SIGNAL(textEdited(QString)), this, SLOT(createNewEdit(QString)));
         LaySnippets->addStretch();
     }
     else
@@ -208,6 +210,17 @@ void MainWidget::appendClip()
     QTextCursor cursor = EdtMain->textCursor();
     cursor.movePosition(QTextCursor::End);
     EdtMain->setTextCursor(cursor);
+}
+
+void MainWidget::createNewEdit(QString Text)
+{
+    if(!Text.isEmpty())
+    {
+        disconnect(EdtSnippet, SIGNAL(textEdited(QString)), this, SLOT(createNewEdit(QString)));
+        EdtSnippet = new QLineEdit();
+        LaySnippets->insertWidget(LaySnippets->count()-1, EdtSnippet);
+        connect(EdtSnippet, SIGNAL(textEdited(QString)), this, SLOT(createNewEdit(QString)));
+    }
 }
 
 //Functions
