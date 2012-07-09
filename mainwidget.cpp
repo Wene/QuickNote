@@ -66,7 +66,9 @@ MainWidget::MainWidget(QWidget *parent)
         Qt::WindowFlags flags = this->windowFlags();
         this->setWindowFlags(flags | Qt::WindowStaysOnTopHint);
     }
+    TabMain->setCurrentIndex(Settings->value("activeTab",0).toInt());
     Settings->endGroup();
+
     Settings->beginGroup("content");
     EdtMain->setPlainText(Settings->value("text","").toString());
     SnippetsList.append(Settings->value("snippets").toStringList());
@@ -97,6 +99,7 @@ MainWidget::~MainWidget()
     {
         Settings->setValue("onTop",0);
     }
+    Settings->setValue("activeTab", TabMain->currentIndex());
     Settings->endGroup();
 
     Settings->beginGroup("content");
