@@ -28,6 +28,7 @@ private:
     QPushButton *BtnEditSnippets;
     QLineEdit *EdtSnippet;
     QPushButton *BtnCopySnippet;
+    QList<SnippetHandler*> HandlerList;
 
     //Settings
     QSettings *Settings;

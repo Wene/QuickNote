@@ -10,9 +10,9 @@ MainWidget::MainWidget(QWidget *parent)
     LayClipButtons = new QHBoxLayout();
     EdtMain = new QPlainTextEdit();
     BtnCopy = new QPushButton(tr("Kopieren"));
-    BtnCopy->setToolTip(tr("Kopiert den markierten Bereich als Plain Text in die Zwischenablage"));
+    BtnCopy->setToolTip(tr("<p>Kopiert den markierten Bereich als Plain Text in die Zwischenablage</p>"));
     BtnAppend = new QPushButton(tr("Anhängen"));
-    BtnAppend->setToolTip(tr("Hängt den Text aus der Zwischenablage zu unterst an."));
+    BtnAppend->setToolTip(tr("<p>Hängt den Text aus der Zwischenablage zu unterst an</p>"));
     ChkTransparent = new QCheckBox(tr("Transparent"));
     ChkOnTop = new QCheckBox(tr("Immer im Vordergrund"));
     WidSnippets = new QWidget();
@@ -20,6 +20,11 @@ MainWidget::MainWidget(QWidget *parent)
     LaySnippets = new QVBoxLayout();
     LayEdit = new QVBoxLayout();
     BtnEditSnippets = new QPushButton(tr("Bearbeiten"));
+    BtnEditSnippets->setToolTip(tr("<p>Klicken um die Snipsel zu bearbeiten, "
+                                   "erneut klicken um die Bearbeitung abzuschliessen.</p>"
+                                   "<p>Bei jeder Bearbeitung steht ein neues leeres Eingabefeld "
+                                   "zur Verfügung um neue Inhalte hinzuzufügen.</p>"
+                                   "<p>Leere Eingabefelder werden gelöscht.</p>"));
     BtnEditSnippets->setCheckable(true);
 
     //create Layout
@@ -143,6 +148,8 @@ void MainWidget::editSnippets(bool bEdit)
     if(bEdit)
     {
         int count = LaySnippets->count();
+
+        //Clean up UI and eventhandler
         for(int i = count-1; i > 1; i--) //Continue while more than EditButton and Line are in the Layout
         {
             QLayoutItem *Item = LaySnippets->itemAt(i);
@@ -152,6 +159,14 @@ void MainWidget::editSnippets(bool bEdit)
             }
             LaySnippets->removeItem(Item);
         }
+        for(int i = 0; i < HandlerList.count(); i++)
+        {
+            SnippetHandler *Handler = HandlerList.at(i);
+            delete Handler;
+        }
+        HandlerList.clear();
+
+        //Create the editor interface
         for(int i = 0; i < SnippetsList.count(); i++)
         {
             EdtSnippet = new QLineEdit(SnippetsList.at(i));
@@ -181,19 +196,24 @@ void MainWidget::editSnippets(bool bEdit)
     }
 }
 
-void MainWidget::createSnippetButtons()
-{
-    for(int i = 0; i < SnippetsList.count(); i++)
-    {
-        BtnCopySnippet = new QPushButton(SnippetsList.at(i));
-        LaySnippets->addWidget(BtnCopySnippet);
-        SnippetHandler *Handler = new SnippetHandler(SnippetsList.at(i));
-        connect(BtnCopySnippet, SIGNAL(clicked()), Handler, SLOT(copyToClipboard()));
-    }
-}
-
 void MainWidget::appendClip()
 {
     QClipboard *Clipboard = QApplication::clipboard();
     EdtMain->appendPlainText(Clipboard->text());
+}
+
+//Functions
+void MainWidget::createSnippetButtons()
+{
+    for(int i = 0; i < SnippetsList.count(); i++)
+    {
+        QString SnippetText = SnippetsList.at(i);
+        BtnCopySnippet = new QPushButton(SnippetText);
+        BtnCopySnippet->setToolTip(tr("<p>Durch Klick auf diesen Button wird der Text "
+                                      "<i>\"%0\"</i> in die Zwischenablage kopiert.").arg(SnippetText));
+        LaySnippets->addWidget(BtnCopySnippet);
+        SnippetHandler *Handler = new SnippetHandler(SnippetsList.at(i));
+        HandlerList.append(Handler);
+        connect(BtnCopySnippet, SIGNAL(clicked()), Handler, SLOT(copyToClipboard()));
+    }
 }
