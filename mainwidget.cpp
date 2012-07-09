@@ -203,6 +203,11 @@ void MainWidget::appendClip()
 {
     QClipboard *Clipboard = QApplication::clipboard();
     EdtMain->appendPlainText(Clipboard->text());
+
+    //AutoScroll
+    QTextCursor cursor = EdtMain->textCursor();
+    cursor.movePosition(QTextCursor::End);
+    EdtMain->setTextCursor(cursor);
 }
 
 //Functions
