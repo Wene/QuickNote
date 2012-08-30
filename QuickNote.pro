@@ -21,3 +21,6 @@ RC_FILE = QuickNote.rc
 
 OTHER_FILES += \
     QuickNote.rc
+
+RESOURCES += \
+    QuickNote.qrc
