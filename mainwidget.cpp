@@ -251,7 +251,7 @@ void MainWidget::createSnippetButtons()
     for(int i = 0; i < SnippetsList.count(); i++)
     {
         QString SnippetText = SnippetsList.at(i);
-        BtnCopySnippet = new QPushButton(SnippetText);
+        BtnCopySnippet = new DragButton(SnippetText);
         BtnCopySnippet->setToolTip(tr("<p>Durch Klick auf diesen Button wird der Text "
                                       "<i>\"%0\"</i> in die Zwischenablage kopiert.").arg(SnippetText));
         LaySnippets->addWidget(BtnCopySnippet);

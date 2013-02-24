@@ -12,10 +12,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwidget.cpp \
-    snippethandler.cpp
+    snippethandler.cpp \
+    dragbutton.cpp
 
 HEADERS  += mainwidget.h \
-    snippethandler.h
+    snippethandler.h \
+    dragbutton.h
 
 RC_FILE = QuickNote.rc
 

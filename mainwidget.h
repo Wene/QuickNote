@@ -22,6 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QtGui>
 #include "snippethandler.h"
+#include "dragbutton.h"
 
 class MainWidget : public QWidget
 {
